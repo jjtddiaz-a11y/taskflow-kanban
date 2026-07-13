@@ -1,0 +1,33 @@
+# Dependencias
+node_modules/
+
+# Base de datos SQLite (desarrollo)
+*.db
+*.db-wal
+*.db-shm
+
+# Variables de entorno
+.env
+.env.local
+.env.production
+
+# Builds
+frontend/dist/
+backend/dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Coverage de tests
+coverage/
