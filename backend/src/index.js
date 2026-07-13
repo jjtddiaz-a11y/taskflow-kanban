@@ -29,6 +29,21 @@ app.use(express.json({ limit: '10kb' })); // Límite de payload para evitar ataq
 app.use(morgan('dev'));               // Logging centralizado de peticiones
 
 // ─── Rutas ─────────────────────────────────────────────────────────
+app.get('/', (_req, res) => {
+  res.json({
+    name: 'TaskFlow API',
+    version: '1.0.0',
+    status: 'running',
+    endpoints: {
+      health: '/api/health',
+      register: 'POST /api/auth/register',
+      login: 'POST /api/auth/login',
+      tasks: 'GET/POST /api/tasks',
+      task: 'PUT/DELETE /api/tasks/:id',
+    },
+  });
+});
+
 app.use('/api/auth', authRoutes);     // Autenticación (registro, login)
 app.use('/api/tasks', taskRoutes);    // CRUD de tareas (requiere JWT)
 
