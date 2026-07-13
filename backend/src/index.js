@@ -20,8 +20,17 @@ const PORT = process.env.PORT || 5000;
 
 // ─── Middleware de seguridad ───────────────────────────────────────
 app.use(helmet());                    // Headers HTTP seguros (XSS, clickjacking, MIME sniffing)
+
+// CORS abierto para desarrollo académico
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173', // CORS restringido
+  origin: function (origin, callback) {
+    // Permitir peticiones sin origen (Postman, curl) y cualquier .netlify.app
+    if (!origin || origin.endsWith('.netlify.app') || origin === 'http://localhost:5173') {
+      callback(null, true);
+    } else {
+      callback(new Error('No permitido por CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
