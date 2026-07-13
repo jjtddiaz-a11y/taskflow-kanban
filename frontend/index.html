@@ -1,10 +1,25 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
+    <title>TaskFlow - Kanban</title>
+    <script>
+      // Validar sesión ANTES de cargar React
+      (function() {
+        var token = localStorage.getItem('token');
+        var path = window.location.pathname;
+        // Si no hay token y no estamos en /login, redirigir ya
+        if (!token && path !== '/login') {
+          window.location.replace('/login');
+        }
+        // Si hay token y estamos en /login, redirigir al dashboard
+        if (token && path === '/login') {
+          window.location.replace('/');
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
