@@ -1,25 +1,54 @@
 /**
  * @file Componente raíz de la aplicación.
  * Configura el enrutamiento y protección de rutas.
+ * Valida el token JWT contra el backend en cada carga.
  * 
  * @module App
  */
 
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import api from './api';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 
 /**
  * Componente de ruta protegida.
- * Redirige a /login si no hay token JWT en localStorage.
+ * Valida el token contra el backend antes de mostrar contenido.
  * 
  * @param {Object}  props
  * @param {ReactNode} props.children - Componente hijo protegido
  * @returns {ReactNode}
  */
 function PrivateRoute({ children }) {
-  const token = localStorage.getItem('token');
-  return token ? children : <Navigate to="/login" replace />;
+  const [status, setStatus] = useState('loading'); // loading | valid | invalid
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setStatus('invalid');
+      return;
+    }
+
+    // Validar token contra el backend
+    api.get('/api/tasks')
+      .then(() => setStatus('valid'))
+      .catch(() => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setStatus('invalid');
+      });
+  }, []);
+
+  if (status === 'loading') {
+    return (
+      <div className="min-h-screen bg-slate-800 flex items-center justify-center">
+        <div className="text-white text-lg">Verificando sesión...</div>
+      </div>
+    );
+  }
+
+  return status === 'valid' ? children : <Navigate to="/login" replace />;
 }
 
 /**
@@ -44,9 +73,6 @@ export default function App() {
             </PrivateRoute>
           }
         />
-
-        {/* Catch-all: redirige a dashboard o login */}
-        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

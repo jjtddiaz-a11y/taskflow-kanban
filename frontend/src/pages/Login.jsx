@@ -4,7 +4,7 @@
  * @module pages/Login
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
 
@@ -17,6 +17,21 @@ import api from '../api';
  * @returns {ReactNode}
  */
 export default function Login() {
+  const navigate = useNavigate();
+
+  // Si ya hay sesión, redirigir al dashboard
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      api.get('/api/tasks')
+        .then(() => navigate('/', { replace: true }))
+        .catch(() => {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+        });
+    }
+  }, [navigate]);
+
   /** @type {[boolean, Function]} Alterna modo registro/login */
   const [isRegister, setIsRegister] = useState(false);
 
@@ -28,8 +43,6 @@ export default function Login() {
 
   /** @type {[boolean, Function]} Estado de carga */
   const [loading, setLoading] = useState(false);
-
-  const navigate = useNavigate();
 
   /**
    * Maneja el envío del formulario de autenticación.
