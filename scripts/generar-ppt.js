@@ -435,7 +435,7 @@ slide9.addText("TaskFlow — Organiza tu trabajo, visualiza tu progreso.", {
   align: "center",
 });
 
-slide9.addText("Repositorio: https://github.com/tu-usuario/taskflow-kanban", {
+slide9.addText("Repositorio: https://github.com/jjtddiaz-a11y/taskflow-kanban", {
   x: 0.5, y: 5.3, w: 9, h: 0.4,
   fontSize: 14, color: CELESTE,
   align: "center",

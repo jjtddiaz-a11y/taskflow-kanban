@@ -574,7 +574,7 @@ async function generarPresentacionFinal() {
             spacing: { after: 100 },
           }),
           new Paragraph({
-            children: [new TextRun({ text: 'Repositorio: https://github.com/tu-usuario/taskflow-kanban', size: 20, color: '2563EB' })],
+            children: [new TextRun({ text: 'Repositorio: https://github.com/jjtddiaz-a11y/taskflow-kanban', size: 20, color: '2563EB' })],
             alignment: AlignmentType.CENTER,
           }),
         ],

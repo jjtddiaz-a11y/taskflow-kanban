@@ -35,7 +35,7 @@ Aplicación web moderna para organizar tareas visualmente con metodología Kanba
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/taskflow-kanban.git
+git clone https://github.com/jjtddiaz-a11y/taskflow-kanban.git
 cd taskflow-kanban
 ```
 
